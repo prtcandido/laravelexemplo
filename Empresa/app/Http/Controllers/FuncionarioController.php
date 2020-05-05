@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Funcionario;
+
 class FuncionarioController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        //
+        $funcionarios = Funcionario::paginate(2); // $funcionarios = Funcionario::all();
+        return View('funcionario.index')->with('funcionarios',$funcionarios); 
     }
 
     /**

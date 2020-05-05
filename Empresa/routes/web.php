@@ -15,5 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('funcionario/create','FuncionarioController@create');
-Route::post('funcionario','FuncionarioController@store');
+Route::resource('funcionario','FuncionarioController');
