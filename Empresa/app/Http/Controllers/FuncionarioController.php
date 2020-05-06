@@ -37,9 +37,19 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all(); // Por exemplo, $dados terá ['nome'=>'joao','endereco'=>'rua x'], supondo que o usuário digitou 'joao' e 'rua x' no formulário.
-        \App\Funcionario::create($dados);
-        return "OK";
+        $this->validate($request,
+            [
+                'nome' => 'required|max:100',
+                'endereco' => 'required|max:100'
+            ],
+            [
+                'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
+                'endereco.required' => 'Endereço é obrigatório',
+                'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
+            ]
+        );
+        Funcionario::create($request->all());
+        return redirect('/funcionario');
     }
 
     /**
@@ -50,7 +60,7 @@ class FuncionarioController extends Controller
      */
     public function show($id)
     {
-        //
+        return View('funcionario.show')->with('funcionario',Funcionario::find($id));
     }
 
     /**
@@ -61,7 +71,7 @@ class FuncionarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        return View('funcionario.edit')->with('funcionario',Funcionario::find($id));   
     }
 
     /**
@@ -73,7 +83,20 @@ class FuncionarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+            [
+                'nome' => 'required|max:100',
+                'endereco' => 'required|max:100'
+            ],
+            [
+                'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
+                'endereco.required' => 'Endereço é obrigatório',
+                'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
+            ]
+        );
+        $funcionario = Funcionario::find($id);
+        $funcionario->update($request->all());
+        return redirect('/funcionario');
     }
 
     /**
@@ -84,6 +107,7 @@ class FuncionarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Funcionario::destroy($id);
+        return redirect('/funcionario');
     }
 }
