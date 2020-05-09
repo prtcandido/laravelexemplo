@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Funcionario;
+use App\Http\Requests\FuncionarioRequest;
 
 class FuncionarioController extends Controller
 {
@@ -35,19 +36,8 @@ class FuncionarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FuncionarioRequest $request)
     {
-        $this->validate($request,
-            [
-                'nome' => 'required|max:100',
-                'endereco' => 'required|max:100'
-            ],
-            [
-                'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
-                'endereco.required' => 'Endereço é obrigatório',
-                'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
-            ]
-        );
         Funcionario::create($request->all());
         return redirect('/funcionario');
     }
@@ -81,19 +71,8 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FuncionarioRequest $request, $id)
     {
-        $this->validate($request,
-            [
-                'nome' => 'required|max:100',
-                'endereco' => 'required|max:100'
-            ],
-            [
-                'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
-                'endereco.required' => 'Endereço é obrigatório',
-                'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
-            ]
-        );
         $funcionario = Funcionario::find($id);
         $funcionario->update($request->all());
         return redirect('/funcionario');
