@@ -14,11 +14,18 @@
 						<p class="text-danger">{{$errors->first('nome')}}</p>
 						@endif
 					</div>
-					<div>
+					<div class="form-group">
 						<label for="endereco">Endereco</label>
 						<input type="text" name="endereco" id="endereco" class="form-control" value="{{old('endereco')}}"/>
 						@if($errors->has('endereco'))
 						<p class="text-danger">{{$errors->first('endereco')}}</p>
+						@endif
+					</div>
+					<div class="form-group">
+						<label for="dataNascimento">Data Nascimento</label>
+						<input type="date" name="dataNascimento" id="dataNascimento" class="form-control" value="{{old('dataNascimento')}}"/>
+						@if($errors->has('dataNascimento'))
+						<p class="text-danger">{{$errors->first('dataNascimento')}}</p>
 						@endif
 					</div>
 		    		<input type="submit" value="Criar" class="btn btn-primary btn-sm"/>

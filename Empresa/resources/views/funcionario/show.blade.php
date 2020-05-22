@@ -10,6 +10,10 @@
 					<dd>{{$funcionario->nome}}</dd>
 					<dt>Endereço</dt>
 					<dd>{{$funcionario->endereco}}</dd>
+					<dt>Endereço</dt>
+					<dd>{{$funcionario->endereco}}</dd>
+					<dt>Data Nascimento</dt>
+					<dd>{{$funcionario->dataNascimento}}</dd>
 				</dl>
 				<form action="/funcionario/{{$funcionario->id}}" method="post" onsubmit="return confirm('Confirma exclusão?')">
 					@csrf

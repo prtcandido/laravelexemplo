@@ -25,7 +25,8 @@ class FuncionarioRequest extends FormRequest
     {
         return [
             'nome' => 'required|max:100',
-            'endereco' => 'required|max:100'
+            'endereco' => 'required|max:100',
+            'dataNascimento' => 'required|date'
         ];
     }
 
@@ -34,7 +35,8 @@ class FuncionarioRequest extends FormRequest
         return [
             'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
             'endereco.required' => 'Endereço é obrigatório',
-            'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
+            'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres',
+            'dataNascimento.*' => 'Data Nascimento é obrigatória',
         ];
     }
 }

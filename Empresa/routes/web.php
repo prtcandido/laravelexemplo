@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('funcionario','FuncionarioController');
+
+Route::resource('projeto','ProjetoController');

@@ -6,12 +6,14 @@
 <tr>
 	<th>Nome</th>
 	<th>Endereço</th>
+	<th>Data Nasc</th>
 	<th></th>
 </tr>
 @foreach($funcionarios as $f)
 <tr>
 	<td>{{$f->nome}}</td>
 	<td>{{$f->endereco}}</td>
+	<td>{{$f->dataNascimento}}</td>
 	<td>
 		<a href="/funcionario/{{$f->id}}" class="btn btn-primary btn-sm">Detalhe</a>
 		<a href="/funcionario/{{$f->id}}/edit" class="btn btn-primary btn-sm">Editar</a>
