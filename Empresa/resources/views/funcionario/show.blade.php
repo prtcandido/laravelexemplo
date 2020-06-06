@@ -15,6 +15,10 @@
 					<dt>Data Nascimento</dt>
 					<dd>{{$funcionario->dataNascimento}}</dd>
 				</dl>
+				<h3>Projetos</h3>
+				@foreach($proj as $p)
+					<p>{{$p->id}} - {{$p->descricao}} - {{$p->orcamento}}</p>
+				@endforeach
 				<form action="/funcionario/{{$funcionario->id}}" method="post" onsubmit="return confirm('Confirma exclusão?')">
 					@csrf
 					@method('DELETE')

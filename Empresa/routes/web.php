@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::resource('funcionario','FuncionarioController');
 
 Route::resource('projeto','ProjetoController');
+
+Route::resource('automovel','AutomovelController');

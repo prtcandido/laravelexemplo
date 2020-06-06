@@ -26,7 +26,7 @@ class FuncionarioRequest extends FormRequest
         return [
             'nome' => 'required|max:100',
             'endereco' => 'required|max:100',
-            'dataNascimento' => 'required|date'
+            'dataNascimento' => 'required|date',
         ];
     }
 

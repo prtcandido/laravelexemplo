@@ -28,8 +28,18 @@
 						<p class="text-danger">{{$errors->first('dataNascimento')}}</p>
 						@endif
 					</div>
-		    		<input type="submit" value="Criar" class="btn btn-primary btn-sm"/>
-		    		<a href="/funcionario" class="btn btn-primary btn-sm">Voltar</a>
+					<div lass="form-group">
+						<label for="departamento_id">Departamento</label>
+						<select name="departamento_id" id="departamento_id" class="form-control">
+							@foreach($deptos as $d)
+								<option value="{{$d->id}}">{{$d->nome}}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
+		    			<input type="submit" value="Criar" class="btn btn-primary btn-sm"/>
+		    			<a href="/funcionario" class="btn btn-primary btn-sm">Voltar</a>
+		    		</div>
 				</form>
 			</div>
 		</div>

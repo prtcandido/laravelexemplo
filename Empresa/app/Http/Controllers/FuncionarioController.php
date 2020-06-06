@@ -27,7 +27,8 @@ class FuncionarioController extends Controller
      */
     public function create()
     {
-        return View('funcionario.create');
+        $departamentos = \App\Departamento::all();
+        return View('funcionario.create')->with('deptos',$departamentos);
     }
 
     /**
@@ -50,7 +51,9 @@ class FuncionarioController extends Controller
      */
     public function show($id)
     {
-        return View('funcionario.show')->with('funcionario',Funcionario::find($id));
+        $funcionario = Funcionario::find($id);
+        $projetos = $funcionario->projetos()->get();
+        return View('funcionario.show')->with('funcionario',$funcionario)->with('proj',$projetos);
     }
 
     /**
