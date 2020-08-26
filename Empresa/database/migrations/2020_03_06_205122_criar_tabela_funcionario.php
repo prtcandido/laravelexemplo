@@ -6,26 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 class CriarTabelaFuncionario extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('funcionarios', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id'); // inteiro - autoincremento
             $table->string('nome',100);
             $table->string('endereco',100);
-            $table->timestamps();
+            $table->timestamps();  // define colunas created_at e updated_at
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('funcionarios');

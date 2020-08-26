@@ -8,6 +8,7 @@
 	<th>Endereço</th>
 	<th></th>
 </tr>
+<!-- Loop pela coleção de funcionários -->
 @foreach($funcionarios as $f)
 <tr>
 	<td>{{$f->nome}}</td>
@@ -19,5 +20,6 @@
 </tr> 
 @endforeach
 </table>
+<!-- Botões de paginação -->
 {{ $funcionarios->links() }}
 @endsection

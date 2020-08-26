@@ -4,83 +4,61 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Funcionario;
+use App\Funcionario;  // referencia o model Funcio´nario
 
 class FuncionarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Lista funcionários cadastrados
     public function index()
     {
-        $funcionarios = Funcionario::paginate(2); // $funcionarios = Funcionario::all();
+        // busca dois usuários por vez no BD
+        $funcionarios = Funcionario::paginate(2);
+        // Aciona View, passando a ela coleção dos funcionários obtidos no BD   
         return View('funcionario.index')->with('funcionarios',$funcionarios); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Aciona a view que envia ao usuário o formulário para cadastro ne novo funcionário
     public function create()
     {
         return View('funcionario.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Valida os dados digitados pelo usuário no formulário e, se corretos, cria novo funcionário no BD
+    // Dados digitados são obtidos no parâmetro objeto $request 
     public function store(Request $request)
     {
+        // Valida os dados em $request
         $this->validate($request,
             [
-                'nome' => 'required|max:100',
-                'endereco' => 'required|max:100'
+                'nome' => 'required|max:100',    // nome obrigatório e no máximo 100 caracteres
+                'endereco' => 'required|max:100' // endereço obrigatório e no máximo 100 caracteres
             ],
+            // mensagens de erro quando a validação falha.
             [
                 'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
                 'endereco.required' => 'Endereço é obrigatório',
                 'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
             ]
         );
+        // Cria funcionário no BD
         Funcionario::create($request->all());
+        // Redireciona para view que lista os funcionários cadastrados
         return redirect('/funcionario');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Aciona view que apresenta os dados do funcionário conforme $id
     public function show($id)
     {
         return View('funcionario.show')->with('funcionario',Funcionario::find($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Aciona view que envia ao usuário formulário preenchido com os dados do funcionário conforme $id
     public function edit($id)
     {
         return View('funcionario.edit')->with('funcionario',Funcionario::find($id));   
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Valida os dados alrerados pelo usuário (edição) e, se ok, atualiza funcionário no BD 
     public function update(Request $request, $id)
     {
         $this->validate($request,
@@ -94,17 +72,12 @@ class FuncionarioController extends Controller
                 'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
             ]
         );
-        $funcionario = Funcionario::find($id);
-        $funcionario->update($request->all());
+        $funcionario = Funcionario::find($id);  // recupera funcionário do BD
+        $funcionario->update($request->all());  // atualiza (grava) novos dados do funcionário
         return redirect('/funcionario');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Exclui funcionário conforme $id
     public function destroy($id)
     {
         Funcionario::destroy($id);
