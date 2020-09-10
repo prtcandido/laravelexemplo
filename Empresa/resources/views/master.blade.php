@@ -8,8 +8,15 @@
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
+	<style type="text/css">
+		.page-item {color: green;}
+		.active {color: green;}
+	</style>
+
 </head>
 <body>
+	<!-- As views filhas incluem conteúdo aqui e no outro Arrobayield acima -->
 	@yield('corpo')
 </body>
 </html>
