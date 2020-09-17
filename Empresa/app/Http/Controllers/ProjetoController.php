@@ -14,7 +14,7 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $projetos = Projeto::paginate(1);
+        $projetos = Projeto::paginate(2);
         return View('projeto.index')->with('projetos',$projetos);
     }
 
@@ -25,7 +25,8 @@ class ProjetoController extends Controller
      */
     public function create()
     {
-        //
+        // Envia formulario em branco para usuário
+        return View('projeto.create');
     }
 
     /**
@@ -36,7 +37,10 @@ class ProjetoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->all() vai ger ['nome'=>'Projeto3','prazo'=>12,'orcamento'=>5000]
+        // falta validar os dados
+        Projeto::create($request->all());
+        return redirect('projeto');
     }
 
     /**
@@ -58,7 +62,7 @@ class ProjetoController extends Controller
      */
     public function edit(Projeto $projeto)
     {
-        //
+        return View('projeto.edit')->with('proj',$projeto);
     }
 
     /**
@@ -70,7 +74,8 @@ class ProjetoController extends Controller
      */
     public function update(Request $request, Projeto $projeto)
     {
-        //
+        $projeto->update($request->all());
+        return redirect('projeto');
     }
 
     /**
