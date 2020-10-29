@@ -17,6 +17,7 @@
 	<td>
 		<a href="/funcionario/{{$f->id}}" class="btn btn-primary btn-sm">Detalhe</a>
 		<a href="/funcionario/{{$f->id}}/edit" class="btn btn-primary btn-sm">Editar</a>
+		<a href="/funcionario/{{$f->id}}/documento" class="btn btn-primary btn-sm">Documento</a>
 	</td>
 </tr> 
 @endforeach

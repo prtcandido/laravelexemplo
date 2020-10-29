@@ -92,4 +92,32 @@ class FuncionarioController extends Controller
         Funcionario::destroy($id);
         return redirect('/funcionario');
     }
+
+    public function documento($id)
+    {
+        return View('funcionario.documento')->with('id',$id);
+    }
+
+    public function documentoGravar(Request $request)
+    {
+        $this->validate($request,
+            [
+                'funcionario_id' => 'required|exists:funcionarios,id',
+                'arquivo' => 'required|file|max:512|mimes:pdf',
+            ],
+            [
+                'funcionario_id.*' => 'funcionarios não localizado',
+                'arquivo.*' => 'Arquivo PDF de no máximo 512 bytes',
+            ]);
+        if ($request->hasFile('arquivo') && $request->file('arquivo')->isValid()) {
+            $nomearq = uniqid("XYZ").'.'.$request->file('arquivo')->extension();
+
+            // grava arquivo na pasta storage/app/documentos
+            $request->file('arquivo')->storeAs('documentos',$nomearq);
+
+            \App\Documento::create(['nomeOriginal'=>$request->file('arquivo')->getClientOriginalName(),'nomeArmazenamento'=>$nomearq,'funcionario_id'=>$request->input('funcionario_id')]);
+        }
+        return redirect('/funcionario');
+    }
+
 }

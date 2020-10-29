@@ -16,7 +16,11 @@ Route::get('/', function () {
 });
 
 Route::resource('funcionario','FuncionarioController');
+Route::get('funcionario/{id}/documento','FuncionarioController@documento');
+Route::post('funcionario/documento','FuncionarioController@documentoGravar');
 
 Route::resource('projeto','ProjetoController');
 
 Route::resource('automovel','AutomovelController');
+
+Route::get('documento','FuncionarioController@documento');

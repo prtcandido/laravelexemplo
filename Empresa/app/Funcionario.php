@@ -15,6 +15,12 @@ class Funcionario extends Model
     public function departamento() {
     	return $this->belongsTo('App\Departamento');
     }
+
+    // Método para obter a coleção dos documentos do funcionário
+    public function documentos() {
+    	return $this->hasMany('App\Documento');
+    }
+
 }
 
 
