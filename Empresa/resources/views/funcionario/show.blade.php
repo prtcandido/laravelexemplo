@@ -19,6 +19,10 @@
 				@foreach($proj as $p)
 					<p>{{$p->id}} - {{$p->descricao}} - {{$p->orcamento}}</p>
 				@endforeach
+				<h3>Documentos</h3>
+				@foreach($documentos as $d)
+					<p><a href="/obtemdocumento?nome={{$d->nomeArmazenamento}}" target="_blanck">{{$d->nomeOriginal}}</a></p>
+				@endforeach
 				<form action="/funcionario/{{$funcionario->id}}" method="post" onsubmit="return confirm('Confirma exclusão?')">
 					@csrf
 					@method('DELETE')

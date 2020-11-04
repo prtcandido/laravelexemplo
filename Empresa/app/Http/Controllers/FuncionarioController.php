@@ -53,7 +53,7 @@ class FuncionarioController extends Controller
     {
         $funcionario = Funcionario::find($id);
         $projetos = $funcionario->projetos()->get();
-        return View('funcionario.show')->with('funcionario',$funcionario)->with('proj',$projetos);
+        return View('funcionario.show')->with('funcionario',$funcionario)->with('proj',$projetos)->with('documentos',$funcionario->documentos()->get());
     }
 
     /**
@@ -93,13 +93,21 @@ class FuncionarioController extends Controller
         return redirect('/funcionario');
     }
 
+    // Conforme rota em web.php, é acionado por URL como a exemplificada abaixo:
+    // localhost:8000/funcionario/34/documento
+    // Onde 34 é o id do funcionário para o qual um documento está sendo carregado
     public function documento($id)
     {
+        // Aciona View que gera o formuário usado para seleção do arquivo PDF
         return View('funcionario.documento')->with('id',$id);
     }
 
+    // Conforme rota em web.php, é acionado por post de formulário.
+    // Dados do formulário, tais como o arquivo sendo uploaded estão em $request
     public function documentoGravar(Request $request)
     {
+        // Nestas validações,é verificado se funcionario_id em funcionarios.id
+        // e é verificado se arquivo existe, é PDF e de tamanho máximo de 512KB
         $this->validate($request,
             [
                 'funcionario_id' => 'required|exists:funcionarios,id',
@@ -109,15 +117,18 @@ class FuncionarioController extends Controller
                 'funcionario_id.*' => 'funcionarios não localizado',
                 'arquivo.*' => 'Arquivo PDF de no máximo 512 bytes',
             ]);
+        // Verifica se o arquivo existe e é válido (redundante com as validação)
         if ($request->hasFile('arquivo') && $request->file('arquivo')->isValid()) {
+            // Cria nome interno para o arquivo gerando um identificador único (uniqid) e com a mesma extensão do arquivo original
             $nomearq = uniqid("XYZ").'.'.$request->file('arquivo')->extension();
 
-            // grava arquivo na pasta storage/app/documentos
+            // Grava arquivo na pasta storage/app/documentos
             $request->file('arquivo')->storeAs('documentos',$nomearq);
 
+            // Grava novo objeto Documento no BD
             \App\Documento::create(['nomeOriginal'=>$request->file('arquivo')->getClientOriginalName(),'nomeArmazenamento'=>$nomearq,'funcionario_id'=>$request->input('funcionario_id')]);
         }
-        return redirect('/funcionario');
+        return redirect('/funcionario'); // Volta para listagem de usuários (index)
     }
 
 }
