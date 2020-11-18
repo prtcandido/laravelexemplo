@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/funcionarios/{funcionario}','FuncionarioController@apiFind');
+
+Route::get('/funcionarios','FuncionarioController@apiAll');
+
+Route::post('/funcionarios','FuncionarioController@apiStore');
+
+Route::put('/funcionarios/{funcionario}','FuncionarioController@apiUpdate');
+
+Route::delete('/funcionarios/{funcionario}','FuncionarioController@apiDelete');

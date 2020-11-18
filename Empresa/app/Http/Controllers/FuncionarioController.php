@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Funcionario;
 use App\Http\Requests\FuncionarioRequest;
+use App\Http\Resources\Funcionario as FuncionarioResource;
 
 class FuncionarioController extends Controller
 {
@@ -129,6 +130,54 @@ class FuncionarioController extends Controller
             \App\Documento::create(['nomeOriginal'=>$request->file('arquivo')->getClientOriginalName(),'nomeArmazenamento'=>$nomearq,'funcionario_id'=>$request->input('funcionario_id')]);
         }
         return redirect('/funcionario'); // Volta para listagem de usuários (index)
+    }
+
+    // API
+
+    public function apiFind(Funcionario $funcionario) {
+        // FuncionarioResource é o apelido de App\Http\Resouces\Funcionario
+        // Cuja finalidade é converter um model para Json
+        // O model a ser convertido é passado no construtor 
+        // Se o model não existir, retorna automaticamente statuscode 404 not found
+        return new FuncionarioResource($funcionario);
+    }
+
+    public function apiAll() {
+        // return coleção de todos os funcionários convertida para Json
+        return FuncionarioResource::collection(Funcionario::all());   
+    }
+
+    public function apiStore(Request $request) {
+        try{
+            $funcionario = Funcionario::create($request->all());
+            return response()->json($funcionario,201); // 201 - model criado
+        }
+        catch (\Exception $ex)
+        {
+            return response()->json(null,400); // 400 - bad request - dados inválidos, por exemplo, violação de chave.
+        }
+    }
+
+    public function apiUpdate(Request $request, Funcionario $funcionario) { // 404 se model não existe
+        try{
+            $funcionario->update($request->all());
+            return response()->json($funcionario,200); // 200 - atualizado
+        }
+        catch (\Exception $ex)
+        {
+            return response()->json(null,400); // 400 - bad request - dados inválidos, por exemplo, violação de chave.
+        }
+    }
+
+    public function apiDelete(Funcionario $funcionario) { // 404 se model não existe
+        try{
+            $funcionario->delete();
+            return response()->json(null,204); // funcionou - sem retorno
+        }
+        catch (\Exception $ex)
+        {
+            return response()->json(null,400); // bad request - pode falhar, por exemplo, devido a chave estrangeira
+        }
     }
 
 }
