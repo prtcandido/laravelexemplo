@@ -17,20 +17,3 @@ Route::get('/', function () {
 
 Route::resource('funcionario','FuncionarioController');
 
-Route::resource('projeto','ProjetoController');
-
-// Route::get(  '/teste' , function() { return '<html><body><h1>Olá</h1></body></html>'; }   );
-
-// Route::get(  '/teste1' , function() { return view('teste1'); }   );
-
-// Route::get(  '/teste2' , 'TesteController@fteste' );
-
-// Route::get( '/funcionario',  'TesteController@listaNome' );
-
-// Route::get( '/funcionario/create', 'TesteController@enviarFormularioCreate');
-
-// Route::post( '/funcionario' , 'TesteController@gravarFuncionario');
-
-
-
-
