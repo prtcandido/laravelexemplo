@@ -2,7 +2,7 @@
 @section('titulo','Editar Funcionário')
 @section('corpo')
 	<div class="container">
-		<h3>Novo Funcionário</h3>
+		<h3>Editar Funcionário</h3>
 		<div class="row">
 			<div class="col-sm-6">
 				<form action="/funcionario/{{$funcionario->id}}" method="post">
