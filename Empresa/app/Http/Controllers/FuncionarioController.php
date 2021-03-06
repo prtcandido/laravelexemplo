@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Funcionario;  // referencia o model Funcio´nario
+use App\Departamento;
 
 class FuncionarioController extends Controller
 {
@@ -20,7 +21,7 @@ class FuncionarioController extends Controller
     // Aciona a view que envia ao usuário o formulário para cadastro ne novo funcionário
     public function create()
     {
-        return View('funcionario.create');
+        return View('funcionario.create')->with('cDepartamentos',Departamento::all());
     }
 
     // Valida os dados digitados pelo usuário no formulário e, se corretos, cria novo funcionário no BD
@@ -31,17 +32,19 @@ class FuncionarioController extends Controller
         $this->validate($request,
             [
                 'nome' => 'required|max:100',    // nome obrigatório e no máximo 100 caracteres
-                'endereco' => 'required|max:100' // endereço obrigatório e no máximo 100 caracteres
+                'endereco' => 'required|max:100', // endereço obrigatório e no máximo 100 caracteres
+                'departamento_id' => 'required|exists:departamentos,id',
             ],
             // mensagens de erro quando a validação falha.
             [
                 'nome.*' => 'Nome é obrigatório de tamanho máximo de 100 caracteres',
                 'endereco.required' => 'Endereço é obrigatório',
-                'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres'
+                'endereco.max' => 'Endereço deve ter tamanho máximo de 100 caracteres',
+                'departamento_id' => 'Departamento inválido',
             ]
         );
         // Cria funcionário no BD
-        Funcionario::create($request->all());
+        Funcionario::create($request->all()); // ['nome'=>'Ana Lucia','endereco'=>'rua K,33', 'departamento_id'=>2]
         // Redireciona para view que lista os funcionários cadastrados
         return redirect('/funcionario');
     }
