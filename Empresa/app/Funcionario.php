@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Funcionario extends Model
 {
     protected $fillable = ['nome','endereco','departamento_id'];
+
+    public function obterDepartamento() {
+    	return $this->belongsTo('App\Departamento','departamento_id')->first();
+    }
+
 }
 
  
