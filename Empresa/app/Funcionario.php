@@ -12,6 +12,10 @@ class Funcionario extends Model
     	return $this->belongsTo('App\Departamento','departamento_id')->first();
     }
 
+    public function obterProjetos() {
+    	return $this->belongsToMany('App\Projeto')->get();
+    }
+
 }
 
  
